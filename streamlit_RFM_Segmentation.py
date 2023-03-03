@@ -181,7 +181,7 @@ elif choice == 'New Prediction':
     st.image("1.jpg")
     st.subheader("Select data")
     lines = None
-    type = st.radio("Upload data (.txt) or Input new customer or Input customer ID?", options=("Upload", "Input_new_customer","Customer_ID"))
+    type = st.radio("Upload new data (.txt) or Search by customer ID?", options=("Upload","Customer_ID"))
     if type=="Upload":
         # Upload file
         uploaded_file_1 = st.file_uploader("Choose a file", type=['txt'])
@@ -206,22 +206,6 @@ elif choice == 'New Prediction':
                 csv=rfm_rfm_k3.to_csv("data.csv")
                 with open('data.csv', 'r') as f:
 	                st.download_button('Download result file', f,file_name='data.csv', mime='text/csv')
-
-    if type=="Input_new_customer":
-        email1 = st.number_input(label="Input your Recency (>=0):")
-        email2 = st.number_input(label="Input your Frequency (>=1):")
-        email3 = st.number_input(label="Input your Monetary (>0):")
-        a=pd.DataFrame({'Recency': [email1],'Frequency': [email2],'Monetary': [email3]})
-        if (email2!=0)&(email3!=0):
-            new_df1=new_df.copy()
-            new_df1=new_df1.append(a)
-            lines = preprocess(new_df1)
-            PCA_components = PCA_model(lines)
-            lines=PCA_components.iloc[:,:1] 
-            st.write("Content:")
-            if len(lines)>0: 
-                y_pred_new = model.predict(lines)
-                st.code("New predictions(Loyal: 1; Promising: 2; Hibernating: 0): " + str(y_pred_new[-1]))
 
     if type=="Customer_ID":
         email = st.number_input(label="Input your customer_ID:",format='%i',step=1)

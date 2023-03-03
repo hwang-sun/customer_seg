@@ -87,7 +87,7 @@ df=read_data("CDNOW_master.txt")
 new_df=create_RFM(df)
 df_scale=preprocess(new_df)
 PCA_components=PCA_model(df_scale)
-model = KMeans(n_clusters= 3, random_state=42)
+model = KMeans(n_clusters= 3, random_state=42,n_init=10)
 model.fit(PCA_components.iloc[:,:1])
 silhouette=silhouette_score(PCA_components.iloc[:,:1], model.labels_, metric='euclidean')
 

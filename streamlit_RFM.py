@@ -261,17 +261,8 @@ elif choice == 'New Prediction':
                                        'Monetary': [Monetary]})
             new_df1=new_df.copy()
             new_df1=new_df1.append(data_input)
-            lines = preprocess(new_df1)
-            PCA_components = PCA_model(lines)
-            lines=PCA_components.iloc[:,:1] 
-            st.write("Content:")
-            if len(lines)>0: 
-                model.fit(lines)
-                y_pred_new = Label_model(new_df1,model)
-                y_pred_new=pd.DataFrame({'New_customer':y_pred_new.iloc[-1]})
-                st.write("New predictions: ")
-                st.dataframe(y_pred_new,use_container_width=True)
-            
+            st.dataframe(new_df1)
+		
     if type=="Customer_ID":
         email = st.number_input(label="Input your customer_ID:",format='%i',step=1)
         if email!=0:
